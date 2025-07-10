@@ -31,7 +31,6 @@ These tests will run as part of our continuous integration pipeline. We will use
     - The tests themselves serve as living, executable documentation of the system's architecture.
 - **Implementation & Maintenance**
     
-    - A dependency on the `ArchUnit` library will be added to our test projects.
     - The suite of architecture tests will need to be maintained and updated as the architecture evolves.
     - For very specific or complex rules not covered by the library, we may need to write custom test logic using reflection.
 - **Performance & Execution**
