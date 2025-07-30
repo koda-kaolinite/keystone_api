@@ -16,7 +16,7 @@ The system requires a public REST API to serve external clients, with the primar
 
 1. **Single API Host Project:** Create one main web application project that serves as the single API entry point. This project would directly reference all business modules (`PropertyManagement`, `PropertySubmissions`, etc.), and its controllers would orchestrate calls to the appropriate module.
     
-2. **Multiple API Projects per Module:** Create a dedicated API project for each business module (e.g., `PropertyManagement.Api`, `PropertySubmissions.Api`). A main host application would then act as a lightweight gateway or compose these separate APIs.
+2. **Multiple API Projects per Module:** Create a dedicated API project for each business module (e.g., `PropertyManagement.Api`). A main host application would then act as a lightweight gateway or compose these separate APIs.
     
 
 ---

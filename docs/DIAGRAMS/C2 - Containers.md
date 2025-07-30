@@ -43,7 +43,7 @@ Person(admin, "Platform Administrator", "Staff managing platform operations and 
   
 ' System Boundary  
 System_Boundary(c1, "Property Management Platform") {  
-    Container(webApp, "Web Application", "Angular, TypeScript", "Single-page application providing user interface for property management", $tags="web_container")  
+    Container(webApp, "Web Application", "Vue.js, TypeScript", "Single-page application providing user interface for property management", $tags="web_container")  
     Container(API, "API", "Web Application", "Central API layer handling authentication, routing, file uploads and business logic", $tags="api_container")  
 }  
   

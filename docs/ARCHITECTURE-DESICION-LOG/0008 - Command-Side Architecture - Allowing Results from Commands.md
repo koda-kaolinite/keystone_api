@@ -31,7 +31,7 @@ The primary use for commands that return data will be:
 
 - **Implementation & Complexity**
     
-    - We will have two definitions for commands and their handlers: one for commands without a result (`ICommand`) and another for commands with a result (`ICommand<TResult>`).
+    - To simplify the design, we will unify the command definition into a single generic interface, `ICommand<TResult>`. Commands that don't return a value will simply implement the interface using the `Void` type, as `ICommand<Void>`.
     - This may add slight complexity to the implementation of patterns that operate on commands, such as decorators for logging or validation.
 - **API & Client Experience**
     

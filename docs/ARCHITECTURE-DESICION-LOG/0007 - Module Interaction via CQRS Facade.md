@@ -19,11 +19,10 @@ We will implement the **Facade** design pattern for all inter-module communicati
 The public contract for every module will be an interface with a structure similar to this:
 
 ```java
-public interface IModuleClient
-{
-    Task<TResult> ExecuteCommandAsync<TResult>(ICommand<TResult> command);
-    Task ExecuteCommandAsync(ICommand command);
-    Task<TResult> ExecuteQueryAsync<TResult>(IQuery<TResult> query);
+public interface IModuleClient {  
+    <TResult> CompletableFuture<TResult> executeCommandAsync(ICommand<TResult> command);  
+  
+    <TResult> CompletableFuture<TResult> executeQueryAsync(IQuery<TResult> query);  
 }
 ```
 
