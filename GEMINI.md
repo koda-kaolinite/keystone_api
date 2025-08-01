@@ -19,7 +19,7 @@ escalabilidade e um baixo acoplamento entre suas partes.
 - **Inversão de Dependência (DIP) via Spring IoC:** A arquitetura segue rigorosamente o Princípio da Inversão de
   Dependência (DIP). Abstrações (interfaces) são definidas nas camadas de `application` ou `domain`, enquanto as
   implementações concretas residem na camada de `infrastructure`. O container de Inversão de Controle (IoC) do Spring é
-  responsável por injetar a implementação correta. Adotamos a estratégia de **"IoC Container por Módulo"** para reforçar a autonomia e o baixo acoplamento entre os módulos.
+  responsável por injetar a implementação correta. Adotamos a estratégia de um **único e global `ApplicationContext` do Spring** para gerenciar todas as dependências, conforme decidido no **ADR-0025**, priorizando a simplicidade e o alinhamento com as práticas idiomáticas do Spring Framework.
     - **Regra:** Ao gerar código, sempre favoreça a **injeção de dependência via construtor** em vez de injeção por
       campo (`@Autowired` em um atributo). Isso torna as dependências do componente explícitas e o código mais testável
       e robusto.
@@ -27,12 +27,12 @@ escalabilidade e um baixo acoplamento entre suas partes.
   separação entre as camadas de `domain`, `application`, `adapter` e `infrastructure`. O fluxo de dependência é sempre
   em direção ao domínio.
 - **Rich Domain Model:** Para a camada de domínio, utilizamos um **Rich Domain Model**, onde a lógica de negócio e o estado residem nos próprios objetos de domínio, garantindo encapsulamento e proteção de invariantes.
-- **Padrões Táticos do DDD:** Implementamos padrões táticos do DDD como **Aggregates** (com Aggregate Roots), **Entities**, **Value Objects**, **Domain Events** e **Repositories** para modelar o domínio de forma robusta e expressiva.
+- **Padrões Táticos do DDD:** Implementamos padrões táticos do DDD como **Aggregates** (com Aggregate Roots), **Entities**, **Value Objects**, **Domain Events** e **Repositories** para modelar o domínio de forma robusta e expressiva. Para modelar variações de um agregado (como diferentes tipos de `Property`), utilizamos um padrão de **Composição sobre Herança (`Padrão Details`)**, conforme decidido no **ADR-0023**.
 - **CQRS (Command Query Responsibility Segregation):** Implementamos a separação entre operações de escrita (Commands) e
   de leitura (Queries). Isso permite otimizar os modelos de dados para cada tipo de operação, melhorando a performance e
   a clareza do código. Inicialmente, os modelos de leitura e escrita operam no **mesmo banco de dados físico**, garantindo consistência imediata. Comandos podem retornar resultados em casos específicos (ex: criação de recursos), utilizando `Void` para comandos sem retorno.
 - **Orientado a Eventos (Entre Módulos):** A comunicação entre os diferentes módulos (Bounded Contexts) é **assíncrona e
-  orientada a eventos**, utilizando **Domain Events** para desacoplamento. Utilizamos o `CompletableFuture` e o sistema de eventos em memória (`EventBus`), com o `ApplicationEventPublisher` do Spring para publicar e `TransactionalEventListener` para consumir eventos, garantindo o baixo acoplamento.
+  orientada a eventos**, utilizando **Domain Events** para desacoplamento. Utilizamos o `CompletableFuture` e o sistema de eventos em memória (`EventBus`), com o `ApplicationEventPublisher` do Spring para publicar e `TransactionalEventListener` para consumir eventos. Para garantir a consistência para o cliente em operações de escrita, aplicamos um padrão de **'bloqueio para resultado'**, onde o `CompletableFuture` atua como uma ponte de sincronização, conforme detalhado no **ADR-0024**.
 - **Spring Modulith:** Usamos esta dependência para reforçar e testar as fronteiras entre os módulos, garantindo que as
   regras de acoplamento não sejam violadas e documentando a relação entre eles.
 
@@ -58,6 +58,7 @@ escalabilidade e um baixo acoplamento entre suas partes.
 ## Princípios e Regras de Codificação
 
 - **Imutabilidade:** Dê preferência a objetos imutáveis, especialmente para DTOs e entidades de domínio.
+- **Identificadores (ULID):** Para chaves primárias, utilizamos **ULID (Universally Unique Lexicographically Sortable Identifier)** para garantir a performance de inserção no banco de dados. Os ULIDs são gerados e persistidos como o tipo `UUID` nativo, conforme **ADR-0022**.
 - **Assincronismo:** Use `CompletableFuture` para operações I/O e para o tratamento de eventos assíncronos entre os
   módulos.
 - **Compatibilidade Nativa:** Evite o uso de reflection e outras funcionalidades que não são bem suportadas pela
