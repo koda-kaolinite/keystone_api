@@ -20,12 +20,16 @@ public class Property extends AggregateRoot {
 
     private final UUID id;
     private boolean active;
-    private List<Image> images;
+    private final List<Image> images;
+    private final PropertyType type;
+    private final Object details; // Generic object to hold specific details
 
-    public Property(UUID id, boolean active, List<Image> images) {
+    public Property(UUID id, boolean active, List<Image> images, PropertyType type, Object details) {
         this.id = id;
         this.active = active;
         this.images = images;
+        this.type = type;
+        this.details = details;
     }
 
     public void disable() {
@@ -65,8 +69,7 @@ public class Property extends AggregateRoot {
 
 
     public void update(UpdateRequest request) {
-        // O UpdateRequest está vazio, então não há campos específicos para atualizar aqui.
-        // Se o UpdateRequest for expandido no futuro, a lógica de atualização pode ser adicionada aqui.
+        // Logic to update the property will be implemented here
     }
 
     public void publishEvents(ApplicationEventPublisher publisher) {

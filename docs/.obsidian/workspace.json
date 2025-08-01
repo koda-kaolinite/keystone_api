@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ARCHITECTURE-DESICION-LOG/0022 - Adopt ULID as Primary Identifier Standard.md",
+                "file": "ARCHITECTURE-DESICION-LOG/0023 - Adopt Details Pattern for Property Variations.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "0022 - Adopt ULID as Primary Identifier Standard"
+              "title": "0023 - Adopt Details Pattern for Property Variations"
             }
           }
         ]
@@ -168,10 +168,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "93577f3bbbf916b9",
+  "active": "024e2b33ff2525a3",
   "lastOpenFiles": [
-    "ARCHITECTURE-DESICION-LOG/0021 - Domain Event Publishing and CommandHandler Responsibility Separation.md",
     "ARCHITECTURE-DESICION-LOG/0022 - Adopt ULID as Primary Identifier Standard.md",
+    "ARCHITECTURE-DESICION-LOG/0023 - Adopt Details Pattern for Property Variations.md",
+    "ARCHITECTURE-DESICION-LOG/0021 - Domain Event Publishing and CommandHandler Responsibility Separation.md",
     "ARCHITECTURE-DESICION-LOG/0020 - Definition of the basic dependencies.md",
     "ARCHITECTURE-DESICION-LOG/0019 - Google Cloud Platform Strategy.md",
     "DIAGRAMS/C3 - Components Modules.md",
@@ -195,7 +196,6 @@
     "ARCHITECTURE-DESICION-LOG/0013 - Handling Business Rule Violations - Exceptions.md",
     "ARCHITECTURE-DESICION-LOG/0008 - Command-Side Architecture - Allowing Results from Commands.md",
     "ARCHITECTURE-DESICION-LOG/0009 - Read-Side Architecture - Simple Two-Layer Approach.md",
-    "ARCHITECTURE-DESICION-LOG/0012 - Domain Implementation with DDD Tactical Patterns.md",
     "Untitled.canvas",
     "DIAGRAMS/PropertyManagementModule.drawio",
     "DIAGRAMS",
