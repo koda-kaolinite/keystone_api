@@ -31,43 +31,43 @@ public class PropertyJpaEntity {
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "house_details_id")
-    private HouseDetailsJpaEntity houseDetails;
+    private HouseDetails houseDetails;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "condominium_house_details_id")
-    private CondominiumHouseDetailsJpaEntity condominiumHouseDetails;
+    private CondominiumHouseDetails condominiumHouseDetails;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "condominium_plot_details_id")
-    private CondominiumPlotDetailsJpaEntity condominiumPlotDetails;
+    private CondominiumPlotDetails condominiumPlotDetails;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "country_house_details_id")
-    private CountryHouseDetailsJpaEntity countryHouseDetails;
+    private CountryHouseDetails countryHouseDetails;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "office_details_id")
-    private OfficeDetailsJpaEntity officeDetails;
+    private OfficeDetails officeDetails;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "others_details_id")
-    private OthersDetailsJpaEntity othersDetails;
+    private OthersDetails othersDetails;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "penthouse_details_id")
-    private PentHouseDetailsJpaEntity pentHouseDetails;
+    private PentHouseDetails pentHouseDetails;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "plot_details_id")
-    private PlotDetailsJpaEntity plotDetails;
+    private PlotDetails plotDetails;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "studio_details_id")
-    private StudioDetailsJpaEntity studioDetails;
+    private StudioDetails studioDetails;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "warehouse_details_id")
-    private WareHouseDetailsJpaEntity wareHouseDetails;
+    private WareHouseDetails wareHouseDetails;
 
     public PropertyJpaEntity(UUID id, boolean active, PropertyType type) {
         this.id = id;

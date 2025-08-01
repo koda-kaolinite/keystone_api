@@ -9,6 +9,7 @@ import com.ts.keystone.api.webAdapter.property.commands.DisableImageCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -20,17 +21,18 @@ public class DisableImageHandler implements ICommandHandler<DisableImageCommand,
     private final ApplicationEventPublisher eventPublisher;
 
     @Override
+    @Transactional
     public CompletableFuture<Void> handle(DisableImageCommand command) {
-        return CompletableFuture.runAsync(() -> {
-            Property property = repository.findById(command.getPropertyUUID())
-                    .orElseThrow(() -> new PropertyNotFound("Cannot found a property with the UUID: " + command.getPropertyUUID()));
+        CompletableFuture<Void> resultFuture = new CompletableFuture<>();
 
-            property.disableImage(command.getImageUUID());
+        Property property = repository.findById(command.getPropertyUUID())
+                .orElseThrow(() -> new PropertyNotFound("Cannot found a property with the UUID: " + command.getPropertyUUID()));
 
-            repository.save(property);
+        property.disableImage(command.getImageUUID(), resultFuture);
 
-            property.publishEvents(eventPublisher);
-            property.clearDomainEvents();
-        });
+        property.publishEvents(eventPublisher);
+        property.clearDomainEvents();
+
+        return resultFuture;
     }
 }

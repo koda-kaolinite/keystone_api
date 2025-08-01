@@ -4,6 +4,7 @@ import com.ts.keystone.api.sharedKernel.application.events.IModuleClient;
 import com.ts.keystone.api.webAdapter.property.commands.*;
 import com.ts.keystone.api.webAdapter.property.queries.GetImageQuery;
 import com.ts.keystone.api.webAdapter.property.queries.PageableSearchQuery;
+import com.ts.keystone.api.webAdapter.property.requests.CreateHouseRequest;
 import com.ts.keystone.api.webAdapter.property.requests.PageableFilters;
 import com.ts.keystone.api.webAdapter.property.requests.UpdateRequest;
 import com.ts.keystone.api.webAdapter.property.responses.ImageDTO;
@@ -23,6 +24,13 @@ import java.util.concurrent.CompletableFuture;
 public class PropertyController {
 
     private final IModuleClient moduleClient;
+
+    @PostMapping("/house")
+    public CompletableFuture<ResponseEntity<UUID>> createHouse(@RequestBody CreateHouseRequest request) {
+        var command = new CreateHouseCommand(request);
+        return moduleClient.executeCommandAsync(command)
+                .thenApply(ResponseEntity::ok);
+    }
 
     @PatchMapping("/{propertyUUID}/disable")
     public CompletableFuture<ResponseEntity<Void>> disableProperty(@PathVariable UUID propertyUUID) {

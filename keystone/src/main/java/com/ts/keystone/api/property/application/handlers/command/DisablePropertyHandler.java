@@ -9,6 +9,7 @@ import com.ts.keystone.api.webAdapter.property.commands.DisablePropertyCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -21,16 +22,19 @@ public class DisablePropertyHandler implements ICommandHandler<DisablePropertyCo
     private final ApplicationEventPublisher eventPublisher;
 
     @Override
+    @Transactional
     public CompletableFuture<Void> handle(DisablePropertyCommand command) {
-        return CompletableFuture.runAsync(() -> {
-            UUID propertyUUID = command.getPropertyUUID();
-            Property property = repository.findById(propertyUUID)
-                    .orElseThrow(() -> new PropertyNotFound("Cannot found a property to disable with the UUID: " + propertyUUID));
+        CompletableFuture<Void> resultFuture = new CompletableFuture<>();
 
-            property.disable();
+        UUID propertyUUID = command.getPropertyUUID();
+        Property property = repository.findById(propertyUUID)
+                .orElseThrow(() -> new PropertyNotFound("Cannot found a property to disable with the UUID: " + propertyUUID));
 
-            property.publishEvents(eventPublisher);
-            property.clearDomainEvents();
-        });
+        property.disable(resultFuture);
+
+        property.publishEvents(eventPublisher);
+        property.clearDomainEvents();
+
+        return resultFuture;
     }
 }

@@ -9,6 +9,7 @@ import com.ts.keystone.api.webAdapter.property.commands.EnableImageCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -20,17 +21,18 @@ public class EnableImageHandler implements ICommandHandler<EnableImageCommand, V
     private final ApplicationEventPublisher eventPublisher;
 
     @Override
+    @Transactional
     public CompletableFuture<Void> handle(EnableImageCommand command) {
-        return CompletableFuture.runAsync(() -> {
-            Property property = repository.findById(command.getPropertyUUID())
-                    .orElseThrow(() -> new PropertyNotFound("Cannot found a property with the UUID: " + command.getPropertyUUID()));
+        CompletableFuture<Void> resultFuture = new CompletableFuture<>();
 
-            property.enableImage(command.getImageUUID());
+        Property property = repository.findById(command.getPropertyUUID())
+                .orElseThrow(() -> new PropertyNotFound("Cannot found a property with the UUID: " + command.getPropertyUUID()));
 
-            repository.save(property);
+        property.enableImage(command.getImageUUID(), resultFuture);
 
-            property.publishEvents(eventPublisher);
-            property.clearDomainEvents();
-        });
+        property.publishEvents(eventPublisher);
+        property.clearDomainEvents();
+
+        return resultFuture;
     }
 }

@@ -1,9 +1,10 @@
 package com.ts.keystone.api.property.infrastructure.persistence;
 
 import com.ts.keystone.api.property.application.IPropertyRepository;
-import com.ts.keystone.api.property.domain.entity.details.*;
 import com.ts.keystone.api.property.domain.entity.image.Image;
 import com.ts.keystone.api.property.domain.entity.property.Property;
+import com.ts.keystone.api.property.infrastructure.persistence.mapper.DetailsMapper;
+import com.ts.keystone.api.property.infrastructure.persistence.mapper.DetailsMapperRegistry;
 import com.ts.keystone.api.property.infrastructure.persistence.model.ImageJpaEntity;
 import com.ts.keystone.api.property.infrastructure.persistence.model.PropertyJpaEntity;
 import com.ts.keystone.api.property.infrastructure.persistence.model.details.*;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 public class PropertyRepositoryImpl implements IPropertyRepository {
 
     private final PropertyJpaRepository jpaRepository;
+    private final DetailsMapperRegistry  mapperRegistry;
 
     @Override
     public Optional<Property> findById(UUID propertyId) {
@@ -50,27 +52,31 @@ public class PropertyRepositoryImpl implements IPropertyRepository {
                 .map(img -> new Image(img.getId(), jpaEntity.getId(), img.getUrl(), img.getDescription(), img.isEnabled()))
                 .collect(Collectors.toList());
 
-        Object details = switch (jpaEntity.getType()) {
-            case HOUSE -> new HouseDetails(); // Mapper de JpaEntity para Domain POJO viria aqui
-            case CONDOMINIUM_HOUSE -> new CondominiumHouseDetails();
-            case CONDOMINIUM_PLOT -> new CondominiumPlotDetails();
-            case COUNTRY_HOUSE -> new CountryHouseDetails();
-            case OFFICE -> new OfficeDetails();
-            case OTHERS -> new OthersDetails();
-            case PENTHOUSE -> new PentHouseDetails();
-            case PLOT -> new PlotDetails();
-            case STUDIO -> new StudioDetails();
-            case WAREHOUSE -> new WareHouseDetails();
-            default -> null;
-        };
+        DetailsMapper mapper = mapperRegistry.getMapper(jpaEntity.getType());
+        Object details = mapper.toDomain(getJpaDetails(jpaEntity));
 
-        return new Property(
+        return Property.fromPersistence(
                 jpaEntity.getId(),
                 jpaEntity.isActive(),
                 images,
                 jpaEntity.getType(),
                 details
         );
+    }
+
+    private Object getJpaDetails(PropertyJpaEntity jpaEntity) {
+        return switch (jpaEntity.getType()) {
+            case HOUSE -> jpaEntity.getHouseDetails();
+            case CONDOMINIUM_HOUSE -> jpaEntity.getCondominiumHouseDetails();
+            case CONDOMINIUM_PLOT -> jpaEntity.getCondominiumPlotDetails();
+            case COUNTRY_HOUSE -> jpaEntity.getCountryHouseDetails();
+            case OFFICE -> jpaEntity.getOfficeDetails();
+            case OTHERS -> jpaEntity.getOthersDetails();
+            case PENTHOUSE -> jpaEntity.getPentHouseDetails();
+            case PLOT -> jpaEntity.getPlotDetails();
+            case STUDIO -> jpaEntity.getStudioDetails();
+            case WAREHOUSE -> jpaEntity.getWareHouseDetails();
+        };
     }
 
     private PropertyJpaEntity toJpaEntity(Property domainProperty) {
@@ -86,16 +92,17 @@ public class PropertyRepositoryImpl implements IPropertyRepository {
         jpaEntity.setImages(imageJpaEntities);
 
         switch (domainProperty.getType()) {
-            case HOUSE -> jpaEntity.setHouseDetails(new HouseDetailsJpaEntity()); // Mapper de Domain POJO para JpaEntity viria aqui
-            case CONDOMINIUM_HOUSE -> jpaEntity.setCondominiumHouseDetails(new CondominiumHouseDetailsJpaEntity());
-            case CONDOMINIUM_PLOT -> jpaEntity.setCondominiumPlotDetails(new CondominiumPlotDetailsJpaEntity());
-            case COUNTRY_HOUSE -> jpaEntity.setCountryHouseDetails(new CountryHouseDetailsJpaEntity());
-            case OFFICE -> jpaEntity.setOfficeDetails(new OfficeDetailsJpaEntity());
-            case OTHERS -> jpaEntity.setOthersDetails(new OthersDetailsJpaEntity());
-            case PENTHOUSE -> jpaEntity.setPentHouseDetails(new PentHouseDetailsJpaEntity());
-            case PLOT -> jpaEntity.setPlotDetails(new PlotDetailsJpaEntity());
-            case STUDIO -> jpaEntity.setStudioDetails(new StudioDetailsJpaEntity());
-            case WAREHOUSE -> jpaEntity.setWareHouseDetails(new WareHouseDetailsJpaEntity());
+            case HOUSE ->
+                    jpaEntity.setHouseDetails(new HouseDetails()); // Mapper de Domain POJO para JpaEntity viria aqui
+            case CONDOMINIUM_HOUSE -> jpaEntity.setCondominiumHouseDetails(new CondominiumHouseDetails());
+            case CONDOMINIUM_PLOT -> jpaEntity.setCondominiumPlotDetails(new CondominiumPlotDetails());
+            case COUNTRY_HOUSE -> jpaEntity.setCountryHouseDetails(new CountryHouseDetails());
+            case OFFICE -> jpaEntity.setOfficeDetails(new OfficeDetails());
+            case OTHERS -> jpaEntity.setOthersDetails(new OthersDetails());
+            case PENTHOUSE -> jpaEntity.setPentHouseDetails(new PentHouseDetails());
+            case PLOT -> jpaEntity.setPlotDetails(new PlotDetails());
+            case STUDIO -> jpaEntity.setStudioDetails(new StudioDetails());
+            case WAREHOUSE -> jpaEntity.setWareHouseDetails(new WareHouseDetails());
         }
 
         return jpaEntity;

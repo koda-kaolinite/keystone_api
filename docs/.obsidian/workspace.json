@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ARCHITECTURE-DESICION-LOG/0023 - Adopt Details Pattern for Property Variations.md",
+                "file": "ARCHITECTURE-DESICION-LOG/0025 - Dependency Injection Strategy - Single Global IoC Container.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "0023 - Adopt Details Pattern for Property Variations"
+              "title": "0025 - Dependency Injection Strategy - Single Global IoC Container"
             }
           }
         ]
@@ -170,8 +170,10 @@
   },
   "active": "024e2b33ff2525a3",
   "lastOpenFiles": [
-    "ARCHITECTURE-DESICION-LOG/0022 - Adopt ULID as Primary Identifier Standard.md",
+    "ARCHITECTURE-DESICION-LOG/0024 - Synchronous Command Execution with Asynchronous Persistence.md",
+    "ARCHITECTURE-DESICION-LOG/0025 - Dependency Injection Strategy - Single Global IoC Container.md",
     "ARCHITECTURE-DESICION-LOG/0023 - Adopt Details Pattern for Property Variations.md",
+    "ARCHITECTURE-DESICION-LOG/0022 - Adopt ULID as Primary Identifier Standard.md",
     "ARCHITECTURE-DESICION-LOG/0021 - Domain Event Publishing and CommandHandler Responsibility Separation.md",
     "ARCHITECTURE-DESICION-LOG/0020 - Definition of the basic dependencies.md",
     "ARCHITECTURE-DESICION-LOG/0019 - Google Cloud Platform Strategy.md",
@@ -194,8 +196,6 @@
     "ARCHITECTURE-DESICION-LOG/0001 - Record architecture decisions.md",
     "ARCHITECTURE-DESICION-LOG/0007 - Module Interaction via CQRS Facade.md",
     "ARCHITECTURE-DESICION-LOG/0013 - Handling Business Rule Violations - Exceptions.md",
-    "ARCHITECTURE-DESICION-LOG/0008 - Command-Side Architecture - Allowing Results from Commands.md",
-    "ARCHITECTURE-DESICION-LOG/0009 - Read-Side Architecture - Simple Two-Layer Approach.md",
     "Untitled.canvas",
     "DIAGRAMS/PropertyManagementModule.drawio",
     "DIAGRAMS",

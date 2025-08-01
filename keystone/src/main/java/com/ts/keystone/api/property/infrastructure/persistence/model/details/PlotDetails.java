@@ -3,19 +3,17 @@ package com.ts.keystone.api.property.infrastructure.persistence.model.details;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @Entity
 @Getter
-@NoArgsConstructor
-public class CountryHouseDetailsJpaEntity {
+public class PlotDetails {
 
     @Id
     private UUID id;
 
-    public CountryHouseDetailsJpaEntity() {
+    public PlotDetails() {
         this.id = UUID.randomUUID();
     }
 }

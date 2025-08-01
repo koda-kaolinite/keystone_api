@@ -9,6 +9,7 @@ import com.ts.keystone.api.webAdapter.property.commands.UploadImageCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
@@ -22,19 +23,27 @@ public class UploadImageHandler implements ICommandHandler<UploadImageCommand, V
     private final ApplicationEventPublisher eventPublisher;
 
     @Override
+    @Transactional
     public CompletableFuture<Void> handle(UploadImageCommand command) {
-        return CompletableFuture.runAsync(() -> {
-            Property property = repository.findById(command.getPropertyUUID())
-                    .orElseThrow(() -> new PropertyNotFound("Cannot found a property with the UUID: " + command.getPropertyUUID()));
+        CompletableFuture<Void> resultFuture = new CompletableFuture<>();
 
-            try {
-                String imageUrl = storageService.uploadImage(command.getPropertyUUID(), command.getImageFile());
-                property.addImage(imageUrl, command.getImageFile().getOriginalFilename());
-                property.publishEvents(eventPublisher);
-                property.clearDomainEvents();
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to upload image", e);
-            }
-        });
+        Property property = repository.findById(command.getPropertyUUID())
+                .orElseThrow(() -> new PropertyNotFound("Cannot found a property with the UUID: " + command.getPropertyUUID()));
+
+        try {
+            String imageUrl = storageService.uploadImage(command.getPropertyUUID(), command.getImageFile());
+            property.addImage(imageUrl, command.getImageFile().getOriginalFilename());
+
+            // Se o addImage gerasse um evento, o future seria passado para ele.
+            // Como não gera, completamos o future aqui.
+            resultFuture.complete(null);
+
+            property.publishEvents(eventPublisher);
+            property.clearDomainEvents();
+
+        } catch (IOException e) {
+            resultFuture.completeExceptionally(new RuntimeException("Failed to upload image", e));
+        }
+        return resultFuture;
     }
 }

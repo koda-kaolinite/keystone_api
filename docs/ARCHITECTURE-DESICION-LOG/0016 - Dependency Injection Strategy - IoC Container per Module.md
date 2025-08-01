@@ -2,7 +2,7 @@
 
 **Date:** 2025-07-04
 
-**Status:** `Accepted`
+**Status:** `Superceded by ADR-0025`
 
 ---
 
