@@ -47,7 +47,7 @@ public class PropertyRepositoryImpl implements IPropertyRepository {
 
     private Property toDomain(PropertyJpaEntity jpaEntity) {
         List<Image> images = jpaEntity.getImages().stream()
-                .map(img -> new Image(img.getId(), img.getProperty().getId(), img.getUrl(), img.getDescription(), img.isEnabled()))
+                .map(img -> new Image(img.getId(), jpaEntity.getId(), img.getUrl(), img.getDescription(), img.isEnabled()))
                 .collect(Collectors.toList());
 
         return new Property(
@@ -64,7 +64,7 @@ public class PropertyRepositoryImpl implements IPropertyRepository {
         );
 
         List<ImageJpaEntity> imageJpaEntities = domainProperty.getImages().stream()
-                .map(img -> new ImageJpaEntity(jpaEntity, img.getUrl(), img.getDescription(), img.isEnabled()))
+                .map(img -> new ImageJpaEntity(img.getId(), jpaEntity, img.getUrl(), img.getDescription(), img.isEnabled()))
                 .collect(Collectors.toList());
         jpaEntity.setImages(imageJpaEntities);
         return jpaEntity;

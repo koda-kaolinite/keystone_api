@@ -30,7 +30,6 @@ public class UploadImageHandler implements ICommandHandler<UploadImageCommand, V
             try {
                 String imageUrl = storageService.uploadImage(command.getPropertyUUID(), command.getImageFile());
                 property.addImage(imageUrl, command.getImageFile().getOriginalFilename());
-                repository.save(property);
                 property.publishEvents(eventPublisher);
                 property.clearDomainEvents();
             } catch (IOException e) {

@@ -4,5 +4,4 @@ import com.ts.keystone.api.sharedKernel.domain.events.IDomainEvent;
 
 import java.util.UUID;
 
-public record PropertyEnabledEvent(UUID propertyId) implements IDomainEvent {
-}
+public record PropertyEnabledEvent(UUID propertyId) implements IDomainEvent {}

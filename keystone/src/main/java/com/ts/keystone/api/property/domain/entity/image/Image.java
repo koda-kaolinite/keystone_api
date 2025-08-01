@@ -7,9 +7,9 @@ import java.util.UUID;
 @Getter
 public class Image {
 
-    private UUID id;
-    private UUID propertyId;
-    private String url;
+    private final UUID id;
+    private final UUID propertyId;
+    private final String url;
     private String description;
     private boolean enabled;
 

@@ -6,10 +6,10 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @EnableAsync
 @SpringBootApplication
-public class PropertyManagementApplication {
+public class KeystoneApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PropertyManagementApplication.class, args);
+		SpringApplication.run(KeystoneApplication.class, args);
 	}
 
 }

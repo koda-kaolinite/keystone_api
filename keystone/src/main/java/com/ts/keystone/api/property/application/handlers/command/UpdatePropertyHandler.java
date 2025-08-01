@@ -25,7 +25,6 @@ public class UpdatePropertyHandler implements ICommandHandler<UpdatePropertyComm
                     .orElseThrow(() -> new PropertyNotFound("Cannot found a property with the UUID: " + command.getPropertyUUID()));
 
             property.update(command.getUpdateRequest());
-            repository.save(property);
 
             property.publishEvents(eventPublisher);
             property.clearDomainEvents();

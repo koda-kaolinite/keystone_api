@@ -27,6 +27,8 @@ public class EnableImageHandler implements ICommandHandler<EnableImageCommand, V
 
             property.enableImage(command.getImageUUID());
 
+            repository.save(property);
+
             property.publishEvents(eventPublisher);
             property.clearDomainEvents();
         });

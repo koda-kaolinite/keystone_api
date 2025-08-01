@@ -27,6 +27,8 @@ public class DisableImageHandler implements ICommandHandler<DisableImageCommand,
 
             property.disableImage(command.getImageUUID());
 
+            repository.save(property);
+
             property.publishEvents(eventPublisher);
             property.clearDomainEvents();
         });

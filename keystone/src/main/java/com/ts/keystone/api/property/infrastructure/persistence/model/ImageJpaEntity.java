@@ -15,7 +15,6 @@ import java.util.UUID;
 public class ImageJpaEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -26,7 +25,8 @@ public class ImageJpaEntity {
     private String description;
     private boolean enabled;
 
-    public ImageJpaEntity(PropertyJpaEntity property, String url, String description, boolean enabled) {
+    public ImageJpaEntity(UUID id, PropertyJpaEntity property, String url, String description, boolean enabled) {
+        this.id = id;
         this.property = property;
         this.url = url;
         this.description = description;
