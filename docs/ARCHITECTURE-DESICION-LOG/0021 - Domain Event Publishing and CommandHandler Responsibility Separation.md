@@ -1,8 +1,8 @@
-## 0021. Domain Event Publishing and CommandHandler Responsibility Separation
+## Title: Domain Event Publishing and CommandHandler Responsibility Separation
 
 **Date:** 2025-07-29
 
-**Status:** Accepted
+**Status:** `Accepted`
 
 ---
 

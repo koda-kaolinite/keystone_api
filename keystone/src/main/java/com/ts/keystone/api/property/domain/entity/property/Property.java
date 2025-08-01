@@ -1,5 +1,6 @@
 package com.ts.keystone.api.property.domain.entity.property;
 
+import com.github.f4b6a3.ulid.UlidCreator;
 import com.ts.keystone.api.property.domain.entity.image.Image;
 import com.ts.keystone.api.property.domain.events.ImageDisabledEvent;
 import com.ts.keystone.api.property.domain.events.ImageEnabledEvent;
@@ -38,7 +39,7 @@ public class Property extends AggregateRoot {
     }
 
     public void addImage(String url, String description) {
-        Image newImage = new Image(UUID.randomUUID(), this.id, url, description, true);
+        Image newImage = new Image(UlidCreator.getMonotonicUlid().toUuid(), this.id, url, description, true);
         this.images.add(newImage);
     }
 

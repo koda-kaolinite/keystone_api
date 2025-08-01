@@ -1,5 +1,6 @@
 package com.ts.keystone.api.property.infrastructure.services;
 
+import com.github.f4b6a3.ulid.UlidCreator;
 import com.ts.keystone.api.property.application.IStorageService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,7 +16,7 @@ public class GcsStorageService implements IStorageService {
         if (imageFile.isEmpty()) {
             throw new IOException("Failed to store empty file.");
         }
-        String fileName = propertyId.toString() + "/" + UUID.randomUUID().toString() + "-" + imageFile.getOriginalFilename();
+        String fileName = propertyId.toString() + "/" + UlidCreator.getMonotonicUlid().toString() + "-" + imageFile.getOriginalFilename();
         return "https://storage.googleapis.com/your-bucket-name/" + fileName;
     }
 }
