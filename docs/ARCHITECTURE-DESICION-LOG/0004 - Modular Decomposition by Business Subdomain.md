@@ -8,7 +8,7 @@
 
 ### **Context**
 
-Given our commitment to a **Modular Monolith architecture**, we must define the primary module boundaries for the application. Following a detailed analysis, the business requirements were organized into the following distinct subdomains: `Property Management` (Core), `Logs` (Generic) and `Administration` (Generic), `Notification` (Generic), `Files` (Generic).
+Given our commitment to a **Modular Monolith architecture**, we must define the primary module boundaries for the application. Following a detailed analysis, the business requirements were organized into the following distinct subdomains: `Property` (Core), `Logs` (Generic) and `Administration` (Generic), `Notification` (Generic), `Files` (Generic).
  
 A clear, coarse-grained decomposition is required to guide development and ensure module autonomy.
 
@@ -20,7 +20,7 @@ We will decompose the monolith into distinct modules, where **each module direct
 
 The following modules will be created:
 
-- **`PropertyManagement`:** Encapsulates the core business logic for managing the entire lifecycle of a property, from submission and enrichment to publication and matching of listings.
+- **`Property`:** Encapsulates the core business logic for managing the entire lifecycle of a property, from submission and enrichment to publication and matching of listings.
 - **`Administration`:** Manages all generic Identity & Access Management functions, such as user logins, permissions, and roles for internal staff.
 - **`Logs`:** Capture a secure and immutable record of all significant user and system actions to ensure accountability, support compliance, and enable diagnostics.
 - **`Notification`:** Handles all notification delivery mechanisms including email, SMS, and push notifications across the system.

@@ -1,0 +1,955 @@
+{
+	"info": {
+		"_postman_id": "YOUR_POSTMAN_COLLECTION_ID_FULL",
+		"name": "Keystone Property Management API (Full)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_collection_id": "YOUR_POSTMAN_COLLECTION_ID_FULL"
+	},
+	"item": [
+		{
+			"name": "Create Property - Condominium House",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"propertyType\": \"CONDOMINIUM_HOUSE\",\n    \"details\": {\n        \"bedrooms\": 3,\n        \"suites\": 1,\n        \"bathrooms\": 2,\n        \"parkingSpaces\": 2,\n        \"floor\": 5,\n        \"totalAreaValue\": 120.5,\n        \"totalAreaUnit\": \"M2\",\n        \"builtAreaValue\": 100.0,\n        \"builtAreaUnit\": \"M2\",\n        \"condominiumName\": \"Green Valley Condominium\",\n        \"condominiumFeeAmount\": 500.00,\n        \"condominiumFeeCurrency\": \"BRL\",\n        \"amenities\": [\"POOL\", \"GYM\"],\n        \"hasGarage\": true,\n        \"hasBalcony\": true\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/property-management",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"property-management"
+					],
+					"description": "Creates a new property of type CONDOMINIUM_HOUSE."
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Property - Condominium Plot",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"propertyType\": \"CONDOMINIUM_PLOT\",\n    \"details\": {\n        \"areaValue\": 300.0,\n        \"areaUnit\": \"M2\",\n        \"dimensions\": \"10x30\",\n        \"topography\": \"Flat\",\n        \"condominiumName\": \"Sunset Hills\",\n        \"condominiumFeeAmount\": 350.00,\n        \"condominiumFeeCurrency\": \"BRL\",\n        \"amenities\": [\"SECURITY\", \"PLAYGROUND\"]\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/property-management",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"property-management"
+					],
+					"description": "Creates a new property of type CONDOMINIUM_PLOT."
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Property - Country House",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"propertyType\": \"COUNTRY_HOUSE\",\n    \"details\": {\n        \"bedrooms\": 4,\n        \"suites\": 2,\n        \"bathrooms\": 3,\n        \"totalAreaValue\": 5000.0,\n        \"totalAreaUnit\": \"M2\",\n        \"builtAreaValue\": 250.0,\n        \"builtAreaUnit\": \"M2\",\n        \"description\": \"Charming country house with vast land and a private lake.\",\n        \"hasGarage\": true,\n        \"hasPool\": true,\n        \"hasRiverOrLake\": true\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/property-management",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"property-management"
+					],
+					"description": "Creates a new property of type COUNTRY_HOUSE."
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Property - House",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"propertyType\": \"HOUSE\",\n    \"details\": {\n        \"bedrooms\": 3,\n        \"suites\": 1,\n        \"bathrooms\": 2,\n        \"parkingSpaces\": 2,\n        \"totalAreaValue\": 150.5,\n        \"totalAreaUnit\": \"M2\",\n        \"builtAreaValue\": 120.0,\n        \"builtAreaUnit\": \"M2\",\n        \"yearBuilt\": 2020,\n        \"description\": \"Beautiful family home with a spacious garden.\",\n        \"hasGarage\": true,\n        \"hasPool\": false,\n        \"hasBalcony\": true\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/property-management",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"property-management"
+					],
+					"description": "Creates a new property of type HOUSE."
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Property - Office",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"propertyType\": \"OFFICE\",\n    \"details\": {\n        \"areaValue\": 80.0,\n        \"areaUnit\": \"M2\",\n        \"numberOfRooms\": 3,\n        \"bathrooms\": 1,\n        \"parkingSpaces\": 1,\n        \"floor\": 10,\n        \"buildingName\": \"Business Tower\",\n        \"hasReception\": true,\n        \"hasAirConditioning\": true\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/property-management",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"property-management"
+					],
+					"description": "Creates a new property of type OFFICE."
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Property - Others",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"propertyType\": \"OTHERS\",\n    \"details\": {\n        \"typeDescription\": \"Commercial Land\",\n        \"areaValue\": 1000.0,\n        \"areaUnit\": \"M2\",\n        \"yearBuilt\": 1990,\n        \"legalStatus\": \"Freehold\",\n        \"description\": \"Large commercial land suitable for various businesses.\"\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/property-management",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"property-management"
+					],
+					"description": "Creates a new property of type OTHERS."
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Property - Penthouse",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"propertyType\": \"PENTHOUSE\",\n    \"details\": {\n        \"bedrooms\": 4,\n        \"suites\": 3,\n        \"bathrooms\": 4,\n        \"parkingSpaces\": 3,\n        \"totalAreaValue\": 300.0,\n        \"totalAreaUnit\": \"M2\",\n        \"builtAreaValue\": 250.0,\n        \"builtAreaUnit\": \"M2\",\n        \"terraceAreaValue\": 50.0,\n        \"terraceAreaUnit\": \"M2\",\n        \"viewDescription\": \"Panoramic city view.\",\n        \"hasGarage\": true,\n        \"hasPool\": true,\n        \"hasPrivateElevator\": true\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/property-management",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"property-management"
+					],
+					"description": "Creates a new property of type PENTHOUSE."
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Property - Plot",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"propertyType\": \"PLOT\",\n    \"details\": {\n        \"areaValue\": 500.0,\n        \"areaUnit\": \"M2\",\n        \"dimensions\": \"20x25\",\n        \"topographyDescription\": \"Slightly sloped\",\n        \"zoning\": \"Residential\",\n        \"hasFence\": false\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/property-management",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"property-management"
+					],
+					"description": "Creates a new property of type PLOT."
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Property - Studio",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"propertyType\": \"STUDIO\",\n    \"details\": {\n        \"areaValue\": 30.0,\n        \"areaUnit\": \"M2\",\n        \"bathroom\": 1,\n        \"floor\": 8,\n        \"condominiumFeeAmount\": 300.00,\n        \"condominiumFeeCurrency\": \"BRL\",\n        \"hasBalcony\": true,\n        \"isFurnished\": true\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/property-management",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"property-management"
+					],
+					"description": "Creates a new property of type STUDIO."
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Property - Warehouse",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"propertyType\": \"WAREHOUSE\",\n    \"details\": {\n        \"storageAreaValue\": 1000.0,\n        \"storageAreaUnit\": \"M2\",\n        \"officeAreaValue\": 50.0,\n        \"officeAreaUnit\": \"M2\",\n        \"ceilingHeightValue\": 8.0,\n        \"loadingDocks\": 3,\n        \"floorType\": \"Concrete\",\n        \"hasLoadingRamp\": true\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/property-management",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"property-management"
+					],
+					"description": "Creates a new property of type WAREHOUSE."
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Property - Condominium House",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"propertyType\": \"CONDOMINIUM_HOUSE\",\n    \"details\": {\n        \"bedrooms\": 4,\n        \"suites\": 2,\n        \"bathrooms\": 3,\n        \"parkingSpaces\": 3,\n        \"floor\": 6,\n        \"totalAreaValue\": 130.0,\n        \"totalAreaUnit\": \"M2\",\n        \"builtAreaValue\": 110.0,\n        \"builtAreaUnit\": \"M2\",\n        \"condominiumName\": \"Green Valley Condominium Updated\",\n        \"condominiumFeeAmount\": 550.00,\n        \"condominiumFeeCurrency\": \"BRL\",\n        \"amenities\": [\"POOL\", \"GYM\", \"SAUNA\"],\n        \"hasGarage\": true,\n        \"hasBalcony\": true\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/property-management/:propertyUUID",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"property-management",
+						":propertyUUID"
+					],
+					"variable": [
+						{
+							"key": "propertyUUID",
+							"value": "YOUR_PROPERTY_UUID"
+						}
+					],
+					"description": "Updates an existing property of type CONDOMINIUM_HOUSE. Replace :propertyUUID with an actual UUID."
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Property - Condominium Plot",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"propertyType\": \"CONDOMINIUM_PLOT\",\n    \"details\": {\n        \"areaValue\": 320.0,\n        \"areaUnit\": \"M2\",\n        \"dimensions\": \"12x28\",\n        \"topography\": \"Slightly sloped\",\n        \"condominiumName\": \"Sunset Hills Updated\",\n        \"condominiumFeeAmount\": 380.00,\n        \"condominiumFeeCurrency\": \"BRL\",\n        \"amenities\": [\"SECURITY\", \"PLAYGROUND\", \"SPORTS_COURT\"]\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/property-management/:propertyUUID",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"property-management",
+						":propertyUUID"
+					],
+					"variable": [
+						{
+							"key": "propertyUUID",
+							"value": "YOUR_PROPERTY_UUID"
+						}
+					],
+					"description": "Updates an existing property of type CONDOMINIUM_PLOT. Replace :propertyUUID with an actual UUID."
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Property - Country House",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"propertyType\": \"COUNTRY_HOUSE\",\n    \"details\": {\n        \"bedrooms\": 5,\n        \"suites\": 3,\n        \"bathrooms\": 4,\n        \"totalAreaValue\": 5500.0,\n        \"totalAreaUnit\": \"M2\",\n        \"builtAreaValue\": 280.0,\n        \"builtAreaUnit\": \"M2\",\n        \"description\": \"Updated charming country house with vast land and a private lake.\",\n        \"hasGarage\": true,\n        \"hasPool\": true,\n        \"hasRiverOrLake\": true\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/property-management/:propertyUUID",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"property-management",
+						":propertyUUID"
+					],
+					"variable": [
+						{
+							"key": "propertyUUID",
+							"value": "YOUR_PROPERTY_UUID"
+						}
+					],
+					"description": "Updates an existing property of type COUNTRY_HOUSE. Replace :propertyUUID with an actual UUID."
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Property - House",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"propertyType\": \"HOUSE\",\n    \"details\": {\n        \"bedrooms\": 4,\n        \"suites\": 2,\n        \"bathrooms\": 3,\n        \"parkingSpaces\": 3,\n        \"totalAreaValue\": 180.0,\n        \"totalAreaUnit\": \"M2\",\n        \"builtAreaValue\": 150.0,\n        \"builtAreaUnit\": \"M2\",\n        \"yearBuilt\": 2021,\n        \"description\": \"Renovated family home with a new pool and expanded garden.\",\n        \"hasGarage\": true,\n        \"hasPool\": true,\n        \"hasBalcony\": true\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/property-management/:propertyUUID",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"property-management",
+						":propertyUUID"
+					],
+					"variable": [
+						{
+							"key": "propertyUUID",
+							"value": "YOUR_PROPERTY_UUID"
+						}
+					],
+					"description": "Updates an existing property of type HOUSE. Replace :propertyUUID with an actual UUID."
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Property - Office",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"propertyType\": \"OFFICE\",\n    \"details\": {\n        \"areaValue\": 90.0,\n        \"areaUnit\": \"M2\",\n        \"numberOfRooms\": 4,\n        \"bathrooms\": 2,\n        \"parkingSpaces\": 2,\n        \"floor\": 11,\n        \"buildingName\": \"Business Tower II\",\n        \"hasReception\": true,\n        \"hasAirConditioning\": true\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/property-management/:propertyUUID",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"property-management",
+						":propertyUUID"
+					],
+					"variable": [
+						{
+							"key": "propertyUUID",
+							"value": "YOUR_PROPERTY_UUID"
+						}
+					],
+					"description": "Updates an existing property of type OFFICE. Replace :propertyUUID with an actual UUID."
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Property - Others",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"propertyType\": \"OTHERS\",\n    \"details\": {\n        \"typeDescription\": \"Industrial Land\",\n        \"areaValue\": 1200.0,\n        \"areaUnit\": \"M2\",\n        \"yearBuilt\": 1995,\n        \"legalStatus\": \"Leasehold\",\n        \"description\": \"Updated industrial land suitable for factory expansion.\"\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/property-management/:propertyUUID",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"property-management",
+						":propertyUUID"
+					],
+					"variable": [
+						{
+							"key": "propertyUUID",
+							"value": "YOUR_PROPERTY_UUID"
+						}
+					],
+					"description": "Updates an existing property of type OTHERS. Replace :propertyUUID with an actual UUID."
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Property - Penthouse",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"propertyType\": \"PENTHOUSE\",\n    \"details\": {\n        \"bedrooms\": 5,\n        \"suites\": 4,\n        \"bathrooms\": 5,\n        \"parkingSpaces\": 4,\n        \"totalAreaValue\": 320.0,\n        \"totalAreaUnit\": \"M2\",\n        \"builtAreaValue\": 270.0,\n        \"builtAreaUnit\": \"M2\",\n        \"terraceAreaValue\": 60.0,\n        \"terraceAreaUnit\": \"M2\",\n        \"viewDescription\": \"Stunning panoramic city view.\",\n        \"hasGarage\": true,\n        \"hasPool\": true,\n        \"hasPrivateElevator\": true\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/property-management/:propertyUUID",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"property-management",
+						":propertyUUID"
+					],
+					"variable": [
+						{
+							"key": "propertyUUID",
+							"value": "YOUR_PROPERTY_UUID"
+						}
+					],
+					"description": "Updates an existing property of type PENTHOUSE. Replace :propertyUUID with an actual UUID."
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Property - Plot",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"propertyType\": \"PLOT\",\n    \"details\": {\n        \"areaValue\": 550.0,\n        \"areaUnit\": \"M2\",\n        \"dimensions\": \"22x25\",\n        \"topographyDescription\": \"Flat with good drainage\",\n        \"zoning\": \"Commercial\",\n        \"hasFence\": true\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/property-management/:propertyUUID",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"property-management",
+						":propertyUUID"
+					],
+					"variable": [
+						{
+							"key": "propertyUUID",
+							"value": "YOUR_PROPERTY_UUID"
+						}
+					],
+					"description": "Updates an existing property of type PLOT. Replace :propertyUUID with an actual UUID."
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Property - Studio",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"propertyType\": \"STUDIO\",\n    \"details\": {\n        \"areaValue\": 35.0,\n        \"areaUnit\": \"M2\",\n        \"bathroom\": 1,\n        \"floor\": 9,\n        \"condominiumFeeAmount\": 320.00,\n        \"condominiumFeeCurrency\": \"BRL\",\n        \"hasBalcony\": true,\n        \"isFurnished\": true\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/property-management/:propertyUUID",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"property-management",
+						":propertyUUID"
+					],
+					"variable": [
+						{
+							"key": "propertyUUID",
+							"value": "YOUR_PROPERTY_UUID"
+						}
+					],
+					"description": "Updates an existing property of type STUDIO. Replace :propertyUUID with an actual UUID."
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Property - Warehouse",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"propertyType\": \"WAREHOUSE\",\n    \"details\": {\n        \"storageAreaValue\": 1100.0,\n        \"storageAreaUnit\": \"M2\",\n        \"officeAreaValue\": 60.0,\n        \"officeAreaUnit\": \"M2\",\n        \"ceilingHeightValue\": 9.0,\n        \"loadingDocks\": 4,\n        \"floorType\": \"Polished Concrete\",\n        \"hasLoadingRamp\": true\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/property-management/:propertyUUID",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"property-management",
+						":propertyUUID"
+					],
+					"variable": [
+						{
+							"key": "propertyUUID",
+							"value": "YOUR_PROPERTY_UUID"
+						}
+					],
+					"description": "Updates an existing property of type WAREHOUSE. Replace :propertyUUID with an actual UUID."
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Disable Property",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/property-management/:propertyUUID/disable",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"property-management",
+						":propertyUUID",
+						"disable"
+					],
+					"variable": [
+						{
+							"key": "propertyUUID",
+							"value": "YOUR_PROPERTY_UUID"
+						}
+					],
+					"description": "Disables a property. Replace :propertyUUID with an actual UUID."
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Enable Property",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/property-management/:propertyUUID/enable",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"property-management",
+						":propertyUUID",
+						"enable"
+					],
+					"variable": [
+						{
+							"key": "propertyUUID",
+							"value": "YOUR_PROPERTY_UUID"
+						}
+					],
+					"description": "Enables a property. Replace :propertyUUID with an actual UUID."
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Disable Image",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/property-management/:propertyUUID/image/:imageUUID/disable",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"property-management",
+						":propertyUUID",
+						"image",
+						":imageUUID",
+						"disable"
+					],
+					"variable": [
+						{
+							"key": "propertyUUID",
+							"value": "YOUR_PROPERTY_UUID"
+						},
+						{
+							"key": "imageUUID",
+							"value": "YOUR_IMAGE_UUID"
+						}
+					],
+					"description": "Disables an image for a property. Replace :propertyUUID and :imageUUID with actual UUIDs."
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Enable Image",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/property-management/:propertyUUID/image/:imageUUID/enable",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"property-management",
+						":propertyUUID",
+						"image",
+						":imageUUID",
+						"enable"
+					],
+					"variable": [
+						{
+							"key": "propertyUUID",
+							"value": "YOUR_PROPERTY_UUID"
+						},
+						{
+							"key": "imageUUID",
+							"value": "YOUR_IMAGE_UUID"
+						}
+					],
+					"description": "Enables an image for a property. Replace :propertyUUID and :imageUUID with actual UUIDs."
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Image",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/path/to/your/image.jpg",
+							"description": "Select an image file here."
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/property-management/:propertyUUID/image",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"property-management",
+						":propertyUUID",
+						"image"
+					],
+					"variable": [
+						{
+							"key": "propertyUUID",
+							"value": "YOUR_PROPERTY_UUID"
+						}
+					],
+					"description": "Uploads an image for a property. Replace :propertyUUID with an actual UUID. You need to manually select the image file in Postman."
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Image URL",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/property-management/:propertyUUID/image/:imageUUID",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"property-management",
+						":propertyUUID",
+						"image",
+						":imageUUID"
+					],
+					"variable": [
+						{
+							"key": "propertyUUID",
+							"value": "YOUR_PROPERTY_UUID"
+						},
+						{
+							"key": "imageUUID",
+							"value": "YOUR_IMAGE_UUID"
+						}
+					],
+					"description": "Retrieves the URL of a specific image for a property. Replace :propertyUUID and :imageUUID with actual UUIDs."
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Properties (Pageable)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"filters\":{},\n    \"page\": 0,\n    \"size\": 10\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/property-management/search?page=0&size=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"property-management",
+						"search"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "10"
+						}
+					],
+					"description": "Searches for properties with pagination and optional filters. Currently, filters are not implemented in the backend."
+				}
+			},
+			"response": []
+		}
+	]
+}
