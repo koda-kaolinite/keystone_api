@@ -4,35 +4,28 @@ package com.ts.keystone.api.property.application.handlers.command;
 import com.ts.keystone.api.property.application.IPropertyRepository;
 import com.ts.keystone.api.property.application.exceptions.PropertyNotFound;
 import com.ts.keystone.api.property.domain.entity.property.Property;
-import com.ts.keystone.api.sharedKernel.application.events.commands.ICommandHandler;
 import com.ts.keystone.api.webAdapter.property.commands.EnableImageCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.concurrent.CompletableFuture;
-
 @Component
 @RequiredArgsConstructor
-public class EnableImageHandler implements ICommandHandler<EnableImageCommand, Void> {
+public class EnableImageHandler {
 
     private final IPropertyRepository repository;
     private final ApplicationEventPublisher eventPublisher;
 
-    @Override
+    @EventListener
     @Transactional
-    public CompletableFuture<Void> handle(EnableImageCommand command) {
-        CompletableFuture<Void> resultFuture = new CompletableFuture<>();
-
+    public void handle(EnableImageCommand command) {
         Property property = repository.findById(command.getPropertyUUID())
                 .orElseThrow(() -> new PropertyNotFound("Cannot found a property with the UUID: " + command.getPropertyUUID()));
 
-        property.enableImage(command.getImageUUID(), resultFuture);
+        property.enableImage(command.getImageUUID(), command.getResultFuture());
 
         property.publishEvents(eventPublisher);
-        property.clearDomainEvents();
-
-        return resultFuture;
     }
 }

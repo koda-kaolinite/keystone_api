@@ -1,19 +1,20 @@
 package com.ts.keystone.api.webAdapter.property.commands;
 
 import com.ts.keystone.api.sharedKernel.application.events.commands.BaseCommand;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
-@EqualsAndHashCode(callSuper = true)
 @Getter
-@Setter
-@AllArgsConstructor
 public class UploadImageCommand extends BaseCommand<Void> {
-    private UUID propertyUUID;
-    private MultipartFile imageFile;
+    private final UUID propertyUUID;
+    private final MultipartFile imageFile;
+
+    public UploadImageCommand(UUID propertyUUID, MultipartFile imageFile, CompletableFuture<Void> resultFuture) {
+        super(propertyUUID, resultFuture);
+        this.propertyUUID = propertyUUID;
+        this.imageFile = imageFile;
+    }
 }

@@ -1,18 +1,19 @@
 package com.ts.keystone.api.webAdapter.property.commands;
 
 import com.ts.keystone.api.sharedKernel.application.events.commands.BaseCommand;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
-@EqualsAndHashCode(callSuper = true)
 @Getter
-@Setter
-@AllArgsConstructor
 public class DisableImageCommand extends BaseCommand<Void> {
-    private UUID imageUUID;
-    private UUID propertyUUID;
+    private final UUID imageUUID;
+    private final UUID propertyUUID;
+
+    public DisableImageCommand(UUID imageUUID, UUID propertyUUID, CompletableFuture<Void> resultFuture) {
+        super(imageUUID, resultFuture);
+        this.imageUUID = imageUUID;
+        this.propertyUUID = propertyUUID;
+    }
 }

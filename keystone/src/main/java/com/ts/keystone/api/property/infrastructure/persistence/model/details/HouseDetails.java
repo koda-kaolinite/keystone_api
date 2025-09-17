@@ -1,28 +1,48 @@
 package com.ts.keystone.api.property.infrastructure.persistence.model.details;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
+import com.ts.keystone.api.sharedKernel.domain.valuesObjects.AreaUnit;
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
 @Getter
-@AllArgsConstructor
+@Setter
+@NoArgsConstructor
 public class HouseDetails {
 
     @Id
     private UUID id;
-    int bedrooms;
-    int bathrooms;
-    double totalArea;
-    boolean hasGarage;
 
-    public HouseDetails() {
-        this.id = UUID.randomUUID();
-    }
+    private int bedrooms;
+    private int suites;
+    private int bathrooms;
+    private int parkingSpaces;
 
-    public HouseDetails(int bedrooms, int bathrooms, double totalArea, boolean hasGarage) {
-    }
+    @Column(name = "total_area_value")
+    private BigDecimal totalAreaValue;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "total_area_unit")
+    private AreaUnit totalAreaUnit;
+
+    @Column(name = "built_area_value")
+    private BigDecimal builtAreaValue;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "built_area_unit")
+    private AreaUnit builtAreaUnit;
+
+    private int yearBuilt;
+
+    @Lob
+    private String description;
+
+    private boolean hasGarage;
+    private boolean hasPool;
+    private boolean hasBalcony;
 }

@@ -1,17 +1,20 @@
 package com.ts.keystone.api.webAdapter.property.commands;
 
-import com.ts.keystone.api.webAdapter.property.requests.ChangeStatusRequest;
 import com.ts.keystone.api.sharedKernel.application.events.commands.BaseCommand;
-import lombok.AllArgsConstructor;
+import com.ts.keystone.api.webAdapter.property.requests.update.ChangeStatusRequest;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
-@AllArgsConstructor
-@Setter
 @Getter
 public class ChangeStatusCommand extends BaseCommand<Void> {
-    private UUID propertyUUID;
-    private ChangeStatusRequest request;
+    private final UUID propertyUUID;
+    private final ChangeStatusRequest request;
+
+    public ChangeStatusCommand(UUID propertyUUID, ChangeStatusRequest request, CompletableFuture<Void> resultFuture) {
+        super(propertyUUID, resultFuture);
+        this.propertyUUID = propertyUUID;
+        this.request = request;
+    }
 }

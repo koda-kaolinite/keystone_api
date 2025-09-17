@@ -1,7 +1,7 @@
 package com.ts.keystone.api.property.infrastructure.persistence.model;
 
-import com.ts.keystone.api.property.domain.entity.property.PropertyType;
 import com.ts.keystone.api.property.infrastructure.persistence.model.details.*;
+import com.ts.keystone.api.sharedKernel.domain.valuesObjects.PropertyType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

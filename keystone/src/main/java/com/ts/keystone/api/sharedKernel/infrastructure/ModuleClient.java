@@ -1,13 +1,11 @@
 package com.ts.keystone.api.sharedKernel.infrastructure;
 
 import com.ts.keystone.api.sharedKernel.application.events.IModuleClient;
-import com.ts.keystone.api.sharedKernel.application.events.commands.ICommand;
-import com.ts.keystone.api.sharedKernel.application.events.integration.IIntegrationEvent;
-import com.ts.keystone.api.sharedKernel.application.events.query.IQuery;
-import com.ts.keystone.api.sharedKernel.infrastructure.events.eventsBus.CommandBus;
-import com.ts.keystone.api.sharedKernel.infrastructure.events.eventsBus.IntegrationEventsBus;
-import com.ts.keystone.api.sharedKernel.infrastructure.events.eventsBus.QueryBus;
+import com.ts.keystone.api.sharedKernel.application.events.commands.BaseCommand;
+import com.ts.keystone.api.sharedKernel.application.events.integration.BaseIntegrationEvent;
+import com.ts.keystone.api.sharedKernel.application.events.query.BaseQuery;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;
@@ -16,22 +14,23 @@ import java.util.concurrent.CompletableFuture;
 @RequiredArgsConstructor
 public class ModuleClient implements IModuleClient {
 
-    private final CommandBus commandBus;
-    private final QueryBus queryBus;
-    private final IntegrationEventsBus integrationEventBus;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Override
-    public <TResult> CompletableFuture<TResult> executeCommandAsync(ICommand<TResult> command) {
-        return commandBus.dispatch(command);
+    public <TResult> CompletableFuture<TResult> executeCommandAsync(BaseCommand<TResult> command) {
+        eventPublisher.publishEvent(command);
+        return command.getResultFuture();
     }
 
     @Override
-    public <TResult> CompletableFuture<TResult> executeQueryAsync(IQuery<TResult> query) {
-        return queryBus.dispatch(query);
+    public <TResult> CompletableFuture<TResult> executeQueryAsync(BaseQuery<TResult> query) {
+        eventPublisher.publishEvent(query);
+        return query.getResultFuture();
     }
 
     @Override
-    public <TResult> CompletableFuture<TResult> executeIntegrationEventAsync(IIntegrationEvent<TResult> integrationEvent) {
-        return integrationEventBus.dispatch(integrationEvent);
+    public <TResult> CompletableFuture<TResult> executeIntegrationEventAsync(BaseIntegrationEvent<TResult> integrationEvent) {
+        eventPublisher.publishEvent(integrationEvent);
+        return integrationEvent.getResultFuture();
     }
 }

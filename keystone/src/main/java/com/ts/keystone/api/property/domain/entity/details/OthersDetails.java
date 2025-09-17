@@ -1,7 +1,10 @@
 package com.ts.keystone.api.property.domain.entity.details;
 
-import lombok.Getter;
+import com.ts.keystone.api.sharedKernel.domain.valuesObjects.Area;
+import com.ts.keystone.api.sharedKernel.domain.valuesObjects.Description;
+import com.ts.keystone.api.sharedKernel.domain.valuesObjects.LegalStatus;
+import com.ts.keystone.api.sharedKernel.domain.valuesObjects.YearBuilt;
 
-@Getter
-public class OthersDetails {
+public record OthersDetails(Description typeDescription, Area area, YearBuilt yearBuilt, LegalStatus legalStatus,
+                            Description description) {
 }

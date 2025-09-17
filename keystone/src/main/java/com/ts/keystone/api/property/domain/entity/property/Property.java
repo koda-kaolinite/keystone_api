@@ -4,10 +4,12 @@ import com.github.f4b6a3.ulid.UlidCreator;
 import com.ts.keystone.api.property.domain.entity.image.Image;
 import com.ts.keystone.api.property.domain.events.*;
 import com.ts.keystone.api.sharedKernel.domain.AggregateRoot;
-import com.ts.keystone.api.webAdapter.property.requests.UpdateRequest;
+import com.ts.keystone.api.sharedKernel.domain.valuesObjects.PropertyType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.AbstractAggregateRoot;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,16 +18,17 @@ import java.util.concurrent.CompletableFuture;
 
 @Getter
 @AllArgsConstructor
-public class Property extends AggregateRoot {
+@ToString
+public class Property extends AbstractAggregateRoot<AggregateRoot> {
 
-    private final UUID id;
+    private UUID id;
     private boolean active;
-    private final List<Image> images;
-    private final PropertyType type;
-    private final Object details; // Generic object to hold specific details of property
+    private List<Image> images;
+    private PropertyType type;
+    private Object details; // Generic object to hold specific details of property
 
     // Factory Constructor
-    Property(UUID id, boolean active, List<Image> images, PropertyType type, Object details, CompletableFuture<UUID> future) {
+    public Property(UUID id, boolean active, List<Image> images, PropertyType type, Object details, CompletableFuture<UUID> future) {
         this.id = id;
         this.active = active;
         this.images = images;
@@ -76,15 +79,12 @@ public class Property extends AggregateRoot {
     }
 
 
-    public void update(UpdateRequest request) {
-        // Logic to update the property will be implemented here
+    public void update(Object details, CompletableFuture<Void> future) {
+        this.details = details;
+        registerEvent(new PropertyUpdatedEvent(this, future));
     }
 
     public void publishEvents(ApplicationEventPublisher publisher) {
         this.domainEvents().forEach(publisher::publishEvent);
-    }
-
-    public void clearDomainEvents() {
-        this.domainEvents().clear();
     }
 }

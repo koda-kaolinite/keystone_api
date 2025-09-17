@@ -1,10 +1,12 @@
 package com.ts.keystone.api.property.domain.entity.image;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.UUID;
 
 @Getter
+@Setter
 public class Image {
 
     private final UUID id;

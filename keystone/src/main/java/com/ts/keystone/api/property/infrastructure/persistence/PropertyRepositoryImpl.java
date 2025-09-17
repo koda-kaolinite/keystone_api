@@ -3,11 +3,9 @@ package com.ts.keystone.api.property.infrastructure.persistence;
 import com.ts.keystone.api.property.application.IPropertyRepository;
 import com.ts.keystone.api.property.domain.entity.image.Image;
 import com.ts.keystone.api.property.domain.entity.property.Property;
-import com.ts.keystone.api.property.infrastructure.persistence.mapper.DetailsMapper;
 import com.ts.keystone.api.property.infrastructure.persistence.mapper.DetailsMapperRegistry;
 import com.ts.keystone.api.property.infrastructure.persistence.model.ImageJpaEntity;
 import com.ts.keystone.api.property.infrastructure.persistence.model.PropertyJpaEntity;
-import com.ts.keystone.api.property.infrastructure.persistence.model.details.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -24,7 +22,7 @@ import java.util.stream.Collectors;
 public class PropertyRepositoryImpl implements IPropertyRepository {
 
     private final PropertyJpaRepository jpaRepository;
-    private final DetailsMapperRegistry  mapperRegistry;
+    private final DetailsMapperRegistry mapperRegistry;
 
     @Override
     public Optional<Property> findById(UUID propertyId) {
@@ -47,12 +45,13 @@ public class PropertyRepositoryImpl implements IPropertyRepository {
         return new PageImpl<>(domainProperties, pageable, jpaEntities.getTotalElements());
     }
 
+    @SuppressWarnings("unchecked")
     private Property toDomain(PropertyJpaEntity jpaEntity) {
         List<Image> images = jpaEntity.getImages().stream()
                 .map(img -> new Image(img.getId(), jpaEntity.getId(), img.getUrl(), img.getDescription(), img.isEnabled()))
                 .collect(Collectors.toList());
 
-        DetailsMapper mapper = mapperRegistry.getMapper(jpaEntity.getType());
+        var mapper = mapperRegistry.getMapper(jpaEntity.getType());
         Object details = mapper.toDomain(getJpaDetails(jpaEntity));
 
         return Property.fromPersistence(
@@ -79,6 +78,7 @@ public class PropertyRepositoryImpl implements IPropertyRepository {
         };
     }
 
+    @SuppressWarnings("unchecked")
     private PropertyJpaEntity toJpaEntity(Property domainProperty) {
         PropertyJpaEntity jpaEntity = new PropertyJpaEntity(
                 domainProperty.getId(),
@@ -91,20 +91,37 @@ public class PropertyRepositoryImpl implements IPropertyRepository {
                 .collect(Collectors.toList());
         jpaEntity.setImages(imageJpaEntities);
 
-        switch (domainProperty.getType()) {
-            case HOUSE ->
-                    jpaEntity.setHouseDetails(new HouseDetails()); // Mapper de Domain POJO para JpaEntity viria aqui
-            case CONDOMINIUM_HOUSE -> jpaEntity.setCondominiumHouseDetails(new CondominiumHouseDetails());
-            case CONDOMINIUM_PLOT -> jpaEntity.setCondominiumPlotDetails(new CondominiumPlotDetails());
-            case COUNTRY_HOUSE -> jpaEntity.setCountryHouseDetails(new CountryHouseDetails());
-            case OFFICE -> jpaEntity.setOfficeDetails(new OfficeDetails());
-            case OTHERS -> jpaEntity.setOthersDetails(new OthersDetails());
-            case PENTHOUSE -> jpaEntity.setPentHouseDetails(new PentHouseDetails());
-            case PLOT -> jpaEntity.setPlotDetails(new PlotDetails());
-            case STUDIO -> jpaEntity.setStudioDetails(new StudioDetails());
-            case WAREHOUSE -> jpaEntity.setWareHouseDetails(new WareHouseDetails());
+        if (domainProperty.getDetails() != null) {
+            var mapper = mapperRegistry.getMapper(domainProperty.getType());
+            Object jpaDetails = mapper.toJpaEntity(domainProperty.getDetails());
+            setJpaDetails(jpaEntity, jpaDetails);
         }
 
         return jpaEntity;
+    }
+
+    private void setJpaDetails(PropertyJpaEntity jpaEntity, Object jpaDetails) {
+        switch (jpaEntity.getType()) {
+            case HOUSE ->
+                    jpaEntity.setHouseDetails((com.ts.keystone.api.property.infrastructure.persistence.model.details.HouseDetails) jpaDetails);
+            case CONDOMINIUM_HOUSE ->
+                    jpaEntity.setCondominiumHouseDetails((com.ts.keystone.api.property.infrastructure.persistence.model.details.CondominiumHouseDetails) jpaDetails);
+            case CONDOMINIUM_PLOT ->
+                    jpaEntity.setCondominiumPlotDetails((com.ts.keystone.api.property.infrastructure.persistence.model.details.CondominiumPlotDetails) jpaDetails);
+            case COUNTRY_HOUSE ->
+                    jpaEntity.setCountryHouseDetails((com.ts.keystone.api.property.infrastructure.persistence.model.details.CountryHouseDetails) jpaDetails);
+            case OFFICE ->
+                    jpaEntity.setOfficeDetails((com.ts.keystone.api.property.infrastructure.persistence.model.details.OfficeDetails) jpaDetails);
+            case OTHERS ->
+                    jpaEntity.setOthersDetails((com.ts.keystone.api.property.infrastructure.persistence.model.details.OthersDetails) jpaDetails);
+            case PENTHOUSE ->
+                    jpaEntity.setPentHouseDetails((com.ts.keystone.api.property.infrastructure.persistence.model.details.PentHouseDetails) jpaDetails);
+            case PLOT ->
+                    jpaEntity.setPlotDetails((com.ts.keystone.api.property.infrastructure.persistence.model.details.PlotDetails) jpaDetails);
+            case STUDIO ->
+                    jpaEntity.setStudioDetails((com.ts.keystone.api.property.infrastructure.persistence.model.details.StudioDetails) jpaDetails);
+            case WAREHOUSE ->
+                    jpaEntity.setWareHouseDetails((com.ts.keystone.api.property.infrastructure.persistence.model.details.WareHouseDetails) jpaDetails);
+        }
     }
 }

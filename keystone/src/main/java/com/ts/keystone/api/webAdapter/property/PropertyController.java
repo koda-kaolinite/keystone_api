@@ -4,9 +4,9 @@ import com.ts.keystone.api.sharedKernel.application.events.IModuleClient;
 import com.ts.keystone.api.webAdapter.property.commands.*;
 import com.ts.keystone.api.webAdapter.property.queries.GetImageQuery;
 import com.ts.keystone.api.webAdapter.property.queries.PageableSearchQuery;
-import com.ts.keystone.api.webAdapter.property.requests.CreateHouseRequest;
 import com.ts.keystone.api.webAdapter.property.requests.PageableFilters;
-import com.ts.keystone.api.webAdapter.property.requests.UpdateRequest;
+import com.ts.keystone.api.webAdapter.property.requests.create.CreatePropertyRequest;
+import com.ts.keystone.api.webAdapter.property.requests.update.UpdatePropertyRequest;
 import com.ts.keystone.api.webAdapter.property.responses.ImageDTO;
 import com.ts.keystone.api.webAdapter.property.responses.PropertyDTO;
 import lombok.RequiredArgsConstructor;
@@ -25,32 +25,36 @@ public class PropertyController {
 
     private final IModuleClient moduleClient;
 
-    @PostMapping("/house")
-    public CompletableFuture<ResponseEntity<UUID>> createHouse(@RequestBody CreateHouseRequest request) {
-        var command = new CreateHouseCommand(request);
+    @PostMapping
+    public CompletableFuture<ResponseEntity<UUID>> createProperty(@RequestBody CreatePropertyRequest request) {
+        CompletableFuture<UUID> resultFuture = new CompletableFuture<>();
+        var command = new CreatePropertyCommand(request, resultFuture);
         return moduleClient.executeCommandAsync(command)
                 .thenApply(ResponseEntity::ok);
     }
 
     @PatchMapping("/{propertyUUID}/disable")
     public CompletableFuture<ResponseEntity<Void>> disableProperty(@PathVariable UUID propertyUUID) {
-        var command = new DisablePropertyCommand(propertyUUID);
+        CompletableFuture<Void> resultFuture = new CompletableFuture<>();
+        var command = new DisablePropertyCommand(propertyUUID, resultFuture);
 
         return moduleClient.executeCommandAsync(command)
-                .thenApply(result -> ResponseEntity.accepted().build());
+                .thenApply(result -> ResponseEntity.ok().build());
     }
 
     @PatchMapping("/{propertyUUID}/enable")
     public CompletableFuture<ResponseEntity<Void>> enableProperty(@PathVariable UUID propertyUUID) {
-        var command = new EnablePropertyCommand(propertyUUID);
+        CompletableFuture<Void> resultFuture = new CompletableFuture<>();
+        var command = new EnablePropertyCommand(propertyUUID, resultFuture);
 
         return moduleClient.executeCommandAsync(command)
-                .thenApply(result -> ResponseEntity.accepted().build());
+                .thenApply(result -> ResponseEntity.ok().build());
     }
 
     @PatchMapping("/{propertyUUID}/image/{imageUUID}/disable")
     public CompletableFuture<ResponseEntity<Void>> disableImage(@PathVariable UUID imageUUID, @PathVariable UUID propertyUUID) {
-        var command = new DisableImageCommand(imageUUID, propertyUUID);
+        CompletableFuture<Void> resultFuture = new CompletableFuture<>();
+        var command = new DisableImageCommand(imageUUID, propertyUUID, resultFuture);
 
         return moduleClient.executeCommandAsync(command)
                 .thenApply(result -> ResponseEntity.ok().build());
@@ -58,23 +62,25 @@ public class PropertyController {
 
     @PatchMapping("/{propertyUUID}/image/{imageUUID}/enable")
     public CompletableFuture<ResponseEntity<Void>> enableImage(@PathVariable UUID imageUUID, @PathVariable UUID propertyUUID) {
-        var command = new EnableImageCommand(imageUUID, propertyUUID);
+        CompletableFuture<Void> resultFuture = new CompletableFuture<>();
+        var command = new EnableImageCommand(imageUUID, propertyUUID, resultFuture);
 
         return moduleClient.executeCommandAsync(command)
                 .thenApply(result -> ResponseEntity.ok().build());
     }
 
-    @PatchMapping("/{propertyUUID}")
-    public CompletableFuture<ResponseEntity<Void>> updateProperty(@RequestBody UpdateRequest request, @PathVariable UUID propertyUUID) {
-        var command = new UpdatePropertyCommand(propertyUUID, request);
-
+    @PatchMapping("/{propertyId}")
+    public CompletableFuture<ResponseEntity<Void>> updateProperty(@PathVariable UUID propertyId, @RequestBody UpdatePropertyRequest request) {
+        CompletableFuture<Void> resultFuture = new CompletableFuture<>();
+        var command = new com.ts.keystone.api.webAdapter.property.commands.UpdatePropertyCommand(propertyId, request, resultFuture);
         return moduleClient.executeCommandAsync(command)
-                .thenApply(result -> ResponseEntity.accepted().build());
+                .thenApply(result -> ResponseEntity.ok().build());
     }
 
     @GetMapping("/search")
     public CompletableFuture<ResponseEntity<Page<PropertyDTO>>> pageableSearch(@RequestBody PageableFilters filters, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
-        var query = new PageableSearchQuery(filters, page, size);
+        CompletableFuture<Page<PropertyDTO>> resultFuture = new CompletableFuture<>();
+        var query = new PageableSearchQuery(filters, page, size, resultFuture);
 
         return moduleClient.executeQueryAsync(query)
                 .thenApply(ResponseEntity::ok);
@@ -82,15 +88,17 @@ public class PropertyController {
 
     @PostMapping(value = "/{propertyUUID}/image", consumes = "multipart/form-data")
     public CompletableFuture<ResponseEntity<Void>> uploadImage(@RequestPart(value = "image") MultipartFile imageFile, @PathVariable UUID propertyUUID) {
-        var command = new UploadImageCommand(propertyUUID, imageFile);
+        CompletableFuture<Void> resultFuture = new CompletableFuture<>();
+        var command = new UploadImageCommand(propertyUUID, imageFile, resultFuture);
 
         return moduleClient.executeCommandAsync(command)
-                .thenApply(result -> ResponseEntity.accepted().build());
+                .thenApply(result -> ResponseEntity.ok().build());
     }
 
     @GetMapping("/{propertyUUID}/image/{imageUUID}")
     public CompletableFuture<ResponseEntity<ImageDTO>> ImageURL(@PathVariable UUID propertyUUID, @PathVariable UUID imageUUID) {
-        var query = new GetImageQuery(propertyUUID, imageUUID);
+        CompletableFuture<ImageDTO> resultFuture = new CompletableFuture<>();
+        var query = new GetImageQuery(propertyUUID, imageUUID, resultFuture);
 
         return moduleClient.executeQueryAsync(query)
                 .thenApply(ResponseEntity::ok);

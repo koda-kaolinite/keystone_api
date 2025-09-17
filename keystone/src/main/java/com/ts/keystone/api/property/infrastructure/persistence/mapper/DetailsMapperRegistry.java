@@ -1,10 +1,10 @@
 package com.ts.keystone.api.property.infrastructure.persistence.mapper;
 
-import com.ts.keystone.api.property.domain.entity.property.PropertyType;
+import com.ts.keystone.api.sharedKernel.domain.valuesObjects.PropertyType;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -27,7 +27,7 @@ public class DetailsMapperRegistry {
     }
 
     public DetailsMapper getMapper(PropertyType type) {
-        DetailsMapper mapper = registry.get(type);
+        var mapper = registry.get(type);
         if (mapper == null) {
             throw new IllegalStateException("No mapper registered for property type: " + type);
         }

@@ -1,6 +1,6 @@
 package com.ts.keystone.api.property.infrastructure.persistence.mapper;
 
-import com.ts.keystone.api.property.domain.entity.property.PropertyType;
+import com.ts.keystone.api.sharedKernel.domain.valuesObjects.PropertyType;
 
 /**
  * Generic interface for mapping between domain detail objects and their corresponding JPA entities.

@@ -1,35 +1,54 @@
 package com.ts.keystone.api.property.infrastructure.persistence.mapper;
 
 import com.ts.keystone.api.property.domain.entity.details.HouseDetails;
-import com.ts.keystone.api.property.domain.entity.property.PropertyType;
+import com.ts.keystone.api.sharedKernel.domain.valuesObjects.PropertyType;
+import com.ts.keystone.api.sharedKernel.domain.valuesObjects.*;
 import org.springframework.stereotype.Component;
 
+import java.time.Year;
+
+@SuppressWarnings("ALL")
 @Component
-public class HouseDetailsMapper implements DetailsMapper<HouseDetails, HouseDetails> {
+public class HouseDetailsMapper implements DetailsMapper<HouseDetails, com.ts.keystone.api.property.infrastructure.persistence.model.details.HouseDetails> {
 
     @Override
-    public HouseDetails toJpaEntity(HouseDetails domainDetails) {
+    public com.ts.keystone.api.property.infrastructure.persistence.model.details.HouseDetails toJpaEntity(HouseDetails domainDetails) {
         if (domainDetails == null) {
             return null;
         }
-        return new HouseDetails(
-                domainDetails.getBedrooms(),
-                domainDetails.getBathrooms(),
-                domainDetails.getTotalArea(),
-                domainDetails.isHasGarage()
-        );
+        var jpa = new com.ts.keystone.api.property.infrastructure.persistence.model.details.HouseDetails();
+        jpa.setId(com.github.f4b6a3.ulid.UlidCreator.getMonotonicUlid().toUuid());
+        jpa.setBedrooms(domainDetails.bedrooms());
+        jpa.setSuites(domainDetails.suites());
+        jpa.setBathrooms(domainDetails.bathrooms());
+        jpa.setParkingSpaces(domainDetails.parkingSpaces());
+        jpa.setTotalAreaValue(domainDetails.totalArea().value());
+        jpa.setTotalAreaUnit(domainDetails.totalArea().unit());
+        jpa.setBuiltAreaValue(domainDetails.builtArea().value());
+        jpa.setBuiltAreaUnit(domainDetails.builtArea().unit());
+        jpa.setYearBuilt(domainDetails.yearBuilt().value().getValue());
+        jpa.setDescription(domainDetails.description().text());
+        jpa.setHasGarage(domainDetails.features().hasGarage());
+        jpa.setHasPool(domainDetails.features().hasPool());
+        jpa.setHasBalcony(domainDetails.features().hasBalcony());
+        return jpa;
     }
 
     @Override
-    public HouseDetails toDomain(HouseDetails jpaEntity) {
+    public HouseDetails toDomain(com.ts.keystone.api.property.infrastructure.persistence.model.details.HouseDetails jpaEntity) {
         if (jpaEntity == null) {
             return null;
         }
         return new HouseDetails(
                 jpaEntity.getBedrooms(),
+                jpaEntity.getSuites(),
                 jpaEntity.getBathrooms(),
-                jpaEntity.getTotalArea(),
-                jpaEntity.isHasGarage()
+                jpaEntity.getParkingSpaces(),
+                new Area(jpaEntity.getTotalAreaValue(), jpaEntity.getTotalAreaUnit()),
+                new Area(jpaEntity.getBuiltAreaValue(), jpaEntity.getBuiltAreaUnit()),
+                new YearBuilt(Year.of(jpaEntity.getYearBuilt())),
+                new Description(jpaEntity.getDescription()),
+                new PropertyFeatures(jpaEntity.isHasGarage(), jpaEntity.isHasPool(), jpaEntity.isHasBalcony(), false, false, false, false, false, false)
         );
     }
 
